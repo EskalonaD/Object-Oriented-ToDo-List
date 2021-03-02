@@ -1,12 +1,26 @@
 import { DAOContext } from '../data-access.interface';
+import { Task } from '../../model-layer';
 
-export class TaskDAOContext implements DAOContext<any, any> {
+interface TaskAPI {
+    id: number;
+    status: string;
+    statusList: string[];
+    description: string;
+    customData: {
+        [key: string]: any;
+    }
+}
+
+export class TaskDAOContext implements DAOContext<TaskAPI, Task> {
     path = '';
-    decode(data:any) {
+
+    //@ts-ignore
+    decode(data: TaskAPI): Task {
         throw new Error('Not implemented yet');
     }
 
-    encode(data: any) {
+    //@ts-ignore
+    encode(data: Task): TaskAPI {
         throw new Error('Not implemented yet');
     }
 }
