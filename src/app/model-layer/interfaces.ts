@@ -1,10 +1,14 @@
 export interface Task {
-    getDescription(): string;
-    getStatus(): string;
-    setStatus(status: string): void; 
+    description: string;
+    status: string;
+    id: number;
     completeTask(): void;
-    updateTask(prop: string, value: any): void;
-    getExtraData(): {[key: string]: any};
+    updateTask(prop: string, value: any, type?: string): void;
+    getExtraData(): Array<{
+        fieldName: string;
+        fieldValue: any;
+        fieldType?: string;
+    }>;
     clone(): Task;
     accept(visitor: TaskVisitor): any;
 }

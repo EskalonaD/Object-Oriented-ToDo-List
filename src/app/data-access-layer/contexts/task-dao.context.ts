@@ -1,13 +1,25 @@
 import { DAOContext } from '../data-access.interface';
 import { Task } from '../../model-layer';
 
-interface TaskAPI {
-    id: number;
-    status: string;
-    statusList: string[];
-    description: string;
-    customData: {
-        [key: string]: any;
+type extraData = {
+    fieldName: string;
+    fieldValue: any;
+    
+    fieldType?: string;
+}
+
+export interface TaskAPI {
+    metaData: {
+        statusList: string[];
+        id: number;
+    },
+    data: {
+        main: {
+
+            status: string;
+            description: string;
+        },
+        extra: extraData[];
     }
 }
 
