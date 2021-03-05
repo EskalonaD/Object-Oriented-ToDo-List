@@ -117,7 +117,7 @@ export class StandardTask implements Task {
 
     //todo: implement patterns
     //@ts-ignore
-    clone() { }
+    clone():Task { }
     accept() { }
 
 

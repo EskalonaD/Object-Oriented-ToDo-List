@@ -16,3 +16,8 @@ export interface Task {
 export interface TaskVisitor {
 
 }
+
+export interface Codec<T, K> {
+    decode(data: T): K;
+    encode(data: K): T;
+}

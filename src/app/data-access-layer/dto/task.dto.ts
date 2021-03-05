@@ -23,16 +23,3 @@ export interface TaskAPI {
     }
 }
 
-export class TaskDAOContext implements DAOContext<TaskAPI, Task> {
-    path = '';
-
-    //@ts-ignore
-    decode(data: TaskAPI): Task {
-        throw new Error('Not implemented yet');
-    }
-
-    //@ts-ignore
-    encode(data: Task): TaskAPI {
-        throw new Error('Not implemented yet');
-    }
-}
