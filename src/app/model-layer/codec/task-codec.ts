@@ -1,6 +1,6 @@
 import { TaskAPI } from 'src/app/data-access-layer/dto/task.dto';
 import { Codec, Task } from '../interfaces';
-import { StandardTask } from '../task';
+import { StandardTask } from '../task/task';
 import { EncodeVisitor } from '../visitor/encode-visitor';
 
 export class TaskCodec implements Codec<TaskAPI, Task> {
@@ -8,7 +8,7 @@ export class TaskCodec implements Codec<TaskAPI, Task> {
 
     decode(data: TaskAPI): Task {
         if (this.validateEncodedData(data)) {
-            const {data: {main: {status, description}, extra}, metaData: {id, statusList}} = data;
+            const {data: {main: {status, description}, extra}, metadata: {id, statusList}} = data;
             const optionalData = {
                 id,
                 statusList,

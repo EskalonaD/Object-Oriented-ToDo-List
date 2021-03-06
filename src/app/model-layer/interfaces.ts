@@ -2,8 +2,9 @@ export interface Task {
     description: string;
     status: string;
     id: number;
-    completeTask(): void;
-    updateTask(prop: string, value: any, type?: string): void;
+    errorList: { field: string, message: string }[];
+    // todo: change argument type
+    validateChange(change: any): boolean;
     getExtraData(): Array<{
         fieldName: string;
         fieldValue: any;

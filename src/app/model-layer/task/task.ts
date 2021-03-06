@@ -1,4 +1,5 @@
-import { Task } from './interfaces';
+import { DAO } from 'src/app/data-access-layer';
+import { Task } from '../interfaces';
 
 enum BaseStatusList {
     completed = 'completed',
@@ -41,14 +42,6 @@ export class StandardTask implements Task {
         return this._description;
     }
 
-    set description(value: string) {
-        if (this.validateDescription(value)) {
-            this._description = value;
-        } else {
-            throw new Error('Task can not be empty.');
-        }
-    }
-
     get id(): number {
         return this._id;
     }
@@ -57,46 +50,15 @@ export class StandardTask implements Task {
         return this._status;
     }
 
-    set status(value: string) {
-        value = value.toLowerCase();
-        
-        if (this.validateStatus(value)) {
-            this._status = value;
-        } else {
-            throw new Error('This value can not be status.');
-        }
-    }
-
-    completeTask(): void {
-        this._status = 'completed';
-    }
-
-
-    // template method. validation method can be changed in descendant classes
-    updateTask(fieldName: string, value: any, type?: string): void {
-        const field = this._extraFields.find(el => el.fieldName === fieldName);
-
-        if (field) {
-            if (this.validateFieldValue(value, field.fieldName, field.fieldType)) {
-            field.fieldValue = value;
-            }else {
-                throw new Error('This value can not be assigned to this field');
-            }
-        } else {
-            const newField: extraData = {
-                fieldName,
-                fieldValue: value,
-                ...type && { fieldType: type },
-            };
-
-            this._extraFields.push(newField);
-        }
-
-    }
-
     getExtraData(): extraData[] {
         return this._extraFields;
     }
+
+    // todo: implement
+    //@ts-ignore
+    validateChange(change): boolean { }
+
+    errorList: { field: 'string', message: string }[] = []
 
     private validateFieldValue(value: any, prop: string, type?: string): boolean {
         return value !== '';
@@ -117,7 +79,7 @@ export class StandardTask implements Task {
 
     //todo: implement patterns
     //@ts-ignore
-    clone():Task { }
+    clone(): Task { }
     accept() { }
 
 

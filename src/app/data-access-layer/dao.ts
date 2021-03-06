@@ -1,4 +1,4 @@
-import { taskMocks } from '../mock/tasks';
+import { taskMocks } from '../../mock/tasks';
 
 export class DAO {
 
@@ -6,7 +6,21 @@ export class DAO {
         return taskMocks;
     }
 
-    getTasks(): Promise<any> {
+    async    getAll(): Promise<any> {
         return this.fetchData('');
     }
+
+ //@ts-ignore
+async create(...args) {}
+
+ //@ts-ignore
+async read(...args) {}
+
+ //@ts-ignore
+ async delete(...args) {}
+
+ //@ts-ignore
+ update(...args): PromiseLike<any>
+
+
 }

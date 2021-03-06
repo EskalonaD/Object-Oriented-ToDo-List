@@ -9,7 +9,7 @@ type extraData = {
 }
 
 export interface TaskAPI {
-    metaData: {
+    metadata: {
         statusList: string[];
         id: number;
     },
