@@ -1,17 +1,26 @@
-export interface Task {
-    description: string;
-    status: string;
-    id: number;
-    errorList: { field: string, message: string }[];
-    // todo: change argument type
+import { extraData } from './task/task';
+
+export type fieldError = { field: string, message: string };
+
+export interface Task extends exportedTask {
+   // todo: change argument type
     validateChange(change: any): boolean;
-    getExtraData(): Array<{
-        fieldName: string;
-        fieldValue: any;
-        fieldType?: string;
-    }>;
     clone(): Task;
     accept(visitor: TaskVisitor): any;
+
+    status:string;
+    description: string;
+    addField(fieldName: string, fieldValue: any, fieldType?: string): void
+}
+
+export interface exportedTask {
+    readonly status: string;
+    readonly errorList: readonly fieldError[]; 
+    readonly statusList: string[];
+    readonly id: number;
+    readonly description: string;
+    readonly extraData: readonly extraData[];
+    clone(): exportedTask;
 }
 
 export interface TaskVisitor {

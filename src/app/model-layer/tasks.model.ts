@@ -3,7 +3,7 @@ import {tap, switchMap} from 'rxjs/operators'
 import { DAO } from '../data-access-layer';
 import { TaskAPI } from '../data-access-layer/dto/task.dto';
 import { TaskCodec } from './codec/task-codec';
-import { Task } from './interfaces';
+import { exportedTask, Task } from './interfaces';
 import { extraData } from './task/task';
 
 export interface updatedTaskData {
@@ -13,7 +13,11 @@ export interface updatedTaskData {
 }
 
 
-export class TasksModel {
+export interface TasksModelForView {
+    getTasks: () => Observable<exportedTask[]>;
+}
+
+export class TasksModel implements TasksModelForView {
 
     //todo change to TaskDAO
     constructor(private codec: TaskCodec, private dao: DAO) { }

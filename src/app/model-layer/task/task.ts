@@ -1,9 +1,20 @@
 import { DAO } from 'src/app/data-access-layer';
-import { Task } from '../interfaces';
+import { fieldError, Task } from '../interfaces';
 
 enum BaseStatusList {
     completed = 'completed',
     incomplete = 'incomplete',
+}
+
+enum TaskFields {
+    description = 'description',
+    status = 'status',
+}
+
+const fieldErrorBaseMessages = {
+    wrongData: 'Data is incompatable to this field.',
+    wrongFieldType: 'There could not be a field with such name.',
+    existedField: 'Field with this name is already existed.',
 }
 
 export type extraData = {
@@ -28,37 +39,76 @@ export class StandardTask implements Task {
             }>,
         }
     ) {
-        this._id = extra?.id ?? NaN;
-        this._extraFields = extra?.extraData ?? [];
+        this.id = extra?.id ?? NaN;
+        this.extraFields = extra?.extraData ?? [];
         this._statusList = extra?.statusList ?? Object.values(BaseStatusList);
     }
-
-    private _id: number;
-    private _extraFields: extraData[];
+    readonly id: number;
+    private extraFields: extraData[];
     private _statusList: string[];
+    private _errorList: fieldError[] = [];
 
 
-    get description(): string {
-        return this._description;
+    set status(newStatus: string) {
+        if(this.validateStatus(newStatus)) {
+            this.removeError(TaskFields.status);
+            this._status = newStatus;
+        }
+
+        this._errorList.push({field: TaskFields.status, message: fieldErrorBaseMessages.wrongData})
     }
-
-    get id(): number {
-        return this._id;
-    }
-
-    get status(): string {
+    get status() {
         return this._status;
     }
 
-    getExtraData(): extraData[] {
-        return this._extraFields;
+    private removeError(errorField: string): void {
+        this._errorList.filter(fieldError => fieldError.field = errorField);
+    }
+
+    addField(fieldName: string, fieldValue: any, fieldType?: string): void {
+        const field: extraData = { fieldName, fieldValue, ...(fieldType && {fieldType}) };
+        if (this.validateFieldAdding(field) ) {
+            this.extraFields.push(field);
+        }
+    }
+
+    // Todo: implement
+    validateFieldAdding(field: extraData): boolean {
+        //stub
+        return true;
+    }
+    
+
+
+    set description (newDescription: string) {
+        if(this.validateDescription(newDescription)) {
+            this._description = newDescription;
+        }
+    }
+
+    get description() {
+        return this._description;
+    }
+
+    get errorList(): readonly fieldError[] {
+        return this._errorList; 
+    } 
+    //@ts-ignore
+    get statusList() {
+        return this._statusList;
+    }
+
+
+    openUpdate() {} proceedUpdate() {} completeUpdate() {} abortUpdate() {}
+
+    get extraData(): readonly extraData[] {
+        return this.extraFields;
     }
 
     // todo: implement
     //@ts-ignore
     validateChange(change): boolean { }
 
-    errorList: { field: 'string', message: string }[] = []
 
     private validateFieldValue(value: any, prop: string, type?: string): boolean {
         return value !== '';
