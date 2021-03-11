@@ -70,6 +70,9 @@ export class StandardTask implements Task {
         if (this.validateFieldAdding(field) ) {
             this.extraFields.push(field);
         }
+
+        this.removeError(fieldName);
+        this.extraFields.push(field);
     }
 
     // Todo: implement
@@ -93,13 +96,20 @@ export class StandardTask implements Task {
     get errorList(): readonly fieldError[] {
         return this._errorList; 
     } 
-    //@ts-ignore
+
     get statusList() {
         return this._statusList;
     }
 
+    // todo: implement
+    update(): void {
 
-    openUpdate() {} proceedUpdate() {} completeUpdate() {} abortUpdate() {}
+    }
+    
+    //todo: inplement
+    deleteField(fieldName: string): void {
+
+    }
 
     get extraData(): readonly extraData[] {
         return this.extraFields;

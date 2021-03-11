@@ -2,25 +2,26 @@ import { extraData } from './task/task';
 
 export type fieldError = { field: string, message: string };
 
-export interface Task extends exportedTask {
+export interface Task extends unexposedTask {
    // todo: change argument type
     validateChange(change: any): boolean;
     clone(): Task;
     accept(visitor: TaskVisitor): any;
 
-    status:string;
-    description: string;
-    addField(fieldName: string, fieldValue: any, fieldType?: string): void
+    update(): void;
+    addField(fieldName: string, fieldValue: any, fieldType?: string): void;
+    deleteField(fieldName: string): void;
 }
 
-export interface exportedTask {
+export interface unexposedTask {
     readonly status: string;
     readonly errorList: readonly fieldError[]; 
     readonly statusList: string[];
     readonly id: number;
     readonly description: string;
     readonly extraData: readonly extraData[];
-    clone(): exportedTask;
+    clone(): unexposedTask;
+    accept(visitor: TaskVisitor): any;
 }
 
 export interface TaskVisitor {
