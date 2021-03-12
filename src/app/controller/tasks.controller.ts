@@ -1,10 +1,20 @@
+import { Observable } from 'rxjs';
 import { unexposedTask, Task } from '../model-layer';
 import { extraData } from '../model-layer/task/task';
 import { TasksModel, updatedTaskData } from '../model-layer/tasks.model';
 
-export class TasksController {
-    constructor (private tasksModel: TasksModel) {}
 
+type ModelSingleton<T> = { getModel(): T}
+
+export class TasksController {
+    private constructor (private tasksModel: TasksModel) {}
+
+    private static instance: TasksController;
+    static getController(model: ModelSingleton<TasksModel>): TasksController {
+        if(TasksController.instance) return TasksController.instance;
+        return new TasksController(model.getModel());
+    }
+    
     addTask(task: updatedTaskData) {}
     updateTask(Task: unexposedTask, taskData: updatedTaskData) {}
     deleteTask(task: unexposedTask) {}
@@ -12,5 +22,8 @@ export class TasksController {
     deleteField(task: unexposedTask, fieldName: string) {}
     completeTask(task: unexposedTask) {}
     changeDescription(task: unexposedTask, description: string) {}
+    getTasks(): Observable<unexposedTask[]> {
+        return this.tasksModel.getTasks();
+    }
 
 }
