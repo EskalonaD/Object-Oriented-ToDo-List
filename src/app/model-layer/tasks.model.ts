@@ -19,9 +19,18 @@ export interface TasksModelForView {
 
 export class TasksModel implements TasksModelForView {
 
-    //todo change to TaskDAO
-    constructor(private codec: TaskCodec, private dao: DAO) { }
+    // seems like aggregation, but actually its composition
+    private constructor(private codec: TaskCodec, private dao: DAO) { }
     isLoading!: boolean;
+
+
+    // singleton realization
+    static getModel(): TasksModel {
+        if(TasksModel.instance) return TasksModel.instance;
+        return new TasksModel(new TaskCodec, new DAO);
+    }
+
+    private static instance: TasksModel;
 
     getTasks(): Observable<Task[]> {
         const tasks = this.dao.getAll();
