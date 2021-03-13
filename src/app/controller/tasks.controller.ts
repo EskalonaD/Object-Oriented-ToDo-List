@@ -4,13 +4,13 @@ import { extraData } from '../model-layer/task/task';
 import { TasksModel, updatedTaskData } from '../model-layer/tasks.model';
 
 
-type ModelSingleton<T> = { getModel(): T}
+type ModelSingleton = { getModel(): TasksModel}
 
 export class TasksController {
     private constructor (private tasksModel: TasksModel) {}
 
     private static instance: TasksController;
-    static getController(model: ModelSingleton<TasksModel>): TasksController {
+    static getController(model: ModelSingleton): TasksController {
         if(TasksController.instance) return TasksController.instance;
         return new TasksController(model.getModel());
     }
