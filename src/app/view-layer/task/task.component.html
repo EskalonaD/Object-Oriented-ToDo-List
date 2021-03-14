@@ -1,0 +1,11 @@
+<div class="wrapper">
+    <!-- <div class="checkbox-container">
+        <input type="checkbox" [checked]="isCompleted" (change)='toggleCompletion()'>
+    </div> -->
+    <div class='description' [class.completed]='isCompleted'> {{ task.description }}</div>
+    <div class="button-container">
+        <button *ngIf='isCompleted' (click)='completeTask()'>complete</button>
+        <button (click)='updateTask()'>edit</button>
+        <button (click)='deleteTask()'>delete</button>
+    </div>
+</div>

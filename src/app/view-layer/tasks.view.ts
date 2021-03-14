@@ -11,11 +11,15 @@ export class TasksView {
     }
 
     tasks: Observable<unexposedTask[]>;
-    
+
     private controller: TasksController;
 
-    completeTask() {}
-    setDescription() {}
-    updateTask() {}
-    deleteTask() {}
+    //@ts-ignore
+    completeTask(...x) { }
+    //@ts-ignore
+    setDescription(...x) { }
+    //@ts-ignore
+    updateTask(...x) { }
+    //@ts-ignore
+    deleteTask(...x) { }
 }

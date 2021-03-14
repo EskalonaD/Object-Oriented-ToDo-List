@@ -1,0 +1,9 @@
+<div>
+	<app-task *ngFor="let task of tasks | async" [task]="task" 
+		(onDelete)="deleteTask($event)"
+		(onComplete)="completeTask($event)"
+		(onUpdate)="goToEditor('update', $event)"
+	
+	></app-task>
+	<div><button (click)="goToEditor('create')">add task</button></div>
+</div>

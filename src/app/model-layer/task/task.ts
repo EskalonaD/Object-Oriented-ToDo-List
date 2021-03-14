@@ -1,7 +1,6 @@
-import { DAO } from 'src/app/data-access-layer';
 import { fieldError, Task } from '../interfaces';
 
-enum BaseStatusList {
+export enum BaseStatusList {
     completed = 'completed',
     incomplete = 'incomplete',
 }
